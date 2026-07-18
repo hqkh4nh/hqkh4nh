@@ -2,8 +2,12 @@ name: Update README cards
 
 on:
   schedule:
-    - cron: "0 0 * * *" 
+    - cron: "0 0 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: update-readme-cards
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -14,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Generate stats card
         uses: stats-organization/github-readme-stats-action@v2
@@ -44,5 +50,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add profile/*.svg
-          git commit -m "Update README cards" || exit 0
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update README cards"
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected, syncing with remote (attempt $attempt)..."
+            git pull --rebase --autostash origin main
+          done
+          echo "Failed to push after 5 attempts" >&2
+          exit 1
