@@ -12,46 +12,22 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: generate-github-profile-summary-cards
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
-      - name: Generate stats card
-        uses: stats-organization/github-readme-stats-action@v2
+      - uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_STATS }}
         with:
-          card: stats
-          options: username=${{ github.repository_owner }}&show_icons=true&count_private=true&hide_border=true&bg_color=00000000&title_color=0969DA&icon_color=0969DA&text_color=768390
-          path: profile/stats.svg
-          token: ${{ secrets.GH_PAT_STATS }}
-
-      - name: Generate top languages card
-        uses: stats-organization/github-readme-stats-action@v2
-        with:
-          card: top-langs
-          options: username=${{ github.repository_owner }}&layout=compact&langs_count=6&hide_border=true&bg_color=00000000&title_color=0969DA&text_color=768390&hide=jupyter%20notebook
-          path: profile/top-langs.svg
-          token: ${{ secrets.GH_PAT_STATS }}
-
-      - name: Commit cards
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/*.svg
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          git commit -m "Update README cards"
-          for attempt in 1 2 3 4 5; do
-            if git push origin HEAD:main; then
-              echo "Pushed on attempt $attempt"
-              exit 0
-            fi
-            echo "Push rejected, syncing with remote (attempt $attempt)..."
-            git pull --rebase --autostash origin main
-          done
-          echo "Failed to push after 5 attempts" >&2
-          exit 1
+          USERNAME: ${{ github.repository_owner }}
+          BRANCH_NAME: "main"
+          UTC_OFFSET: 7
+          EXCLUDE: "jupyter%20notebook"
+          AUTO_PUSH: true
+          THEME: "transparent"
+          ANIMATION: "load"
+          DURATION: ""
+          NAME: ""
