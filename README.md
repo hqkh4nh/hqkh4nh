@@ -45,10 +45,10 @@ Looking for a backend internship.
 
 <div align="center">
 
-<img src="./profile-summary-card-output/transparent/0-profile-details.svg" alt="Profile details" />
+<img src="./profile-summary-card-output/nord_dark/0-profile-details.svg" alt="Profile details" />
 
-<img src="./profile-summary-card-output/transparent/1-repos-per-language.svg" alt="Top languages by repository" />
-<img src="./profile-summary-card-output/transparent/3-stats.svg" alt="GitHub stats" />
+<img src="./profile-summary-card-output/nord_dark/1-repos-per-language.svg" alt="Top languages by repository" />
+<img src="./profile-summary-card-output/nord_dark/3-stats.svg" alt="GitHub stats" />
 
 </div>
 
