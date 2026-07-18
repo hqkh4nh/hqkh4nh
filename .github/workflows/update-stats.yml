@@ -25,7 +25,7 @@ jobs:
           USERNAME: ${{ github.repository_owner }}
           BRANCH_NAME: "main"
           UTC_OFFSET: 7
-          EXCLUDE: "jupyter%20notebook"
+          EXCLUDE: ""
           AUTO_PUSH: true
           THEME: "nord_dark"
           ANIMATION: "load"
