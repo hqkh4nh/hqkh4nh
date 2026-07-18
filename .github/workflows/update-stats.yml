@@ -27,7 +27,7 @@ jobs:
           UTC_OFFSET: 7
           EXCLUDE: "jupyter%20notebook"
           AUTO_PUSH: true
-          THEME: "transparent"
+          THEME: "nord_dark"
           ANIMATION: "load"
           DURATION: ""
-          NAME: ""
+          NAME: "Huỳnh Quốc Khánh"
